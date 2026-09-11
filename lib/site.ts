@@ -3,8 +3,8 @@
  * 修改个人信息只需要改这里。
  */
 export const siteConfig = {
-  name: 'Mryouyou',
-  title: 'Mryouyou · Vibe Coding 工具与产品',
+  name: 'MrYou²',
+  title: 'MrYou² · Vibe Coding 工具与产品',
   description:
     '一名 Vibe Coder 的工具箱与产品陈列室 —— 用自然语言构建软件，记录从一句话想法到可运行产品的全过程。',
   url: 'https://mryouyou.pages.dev',
