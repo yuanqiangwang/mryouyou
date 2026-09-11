@@ -1,0 +1,331 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==================================================================
+ * 设计令牌 (Design Tokens)
+ * 默认主题为 Dark —— 见 app/layout.tsx 中 <html class="dark">
+ * 亮色令牌保留完整，以便后续接入主题切换时无需返工。
+ * ================================================================== */
+
+:root {
+  --radius: 0.75rem;
+
+  --background: oklch(0.99 0.002 250);
+  --foreground: oklch(0.16 0.015 265);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.015 265);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.015 265);
+  --primary: oklch(0.55 0.16 215);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.008 260);
+  --secondary-foreground: oklch(0.22 0.02 265);
+  --muted: oklch(0.96 0.008 260);
+  --muted-foreground: oklch(0.52 0.02 260);
+  --accent: oklch(0.55 0.2 292);
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.58 0.22 27);
+  --border: oklch(0.16 0.015 265 / 12%);
+  --input: oklch(0.16 0.015 265 / 15%);
+  --ring: oklch(0.55 0.16 215 / 45%);
+
+  /* 品牌三色渐变：青 -> 靛 -> 紫 */
+  --brand-from: oklch(0.72 0.15 205);
+  --brand-via: oklch(0.6 0.18 262);
+  --brand-to: oklch(0.58 0.22 305);
+}
+
+.dark {
+  --background: oklch(0.135 0.018 265);
+  --foreground: oklch(0.97 0.004 250);
+  --card: oklch(0.178 0.018 265);
+  --card-foreground: oklch(0.97 0.004 250);
+  --popover: oklch(0.178 0.018 265);
+  --popover-foreground: oklch(0.97 0.004 250);
+  --primary: oklch(0.82 0.14 200);
+  --primary-foreground: oklch(0.15 0.02 265);
+  --secondary: oklch(0.24 0.02 265);
+  --secondary-foreground: oklch(0.97 0.004 250);
+  --muted: oklch(0.22 0.018 265);
+  --muted-foreground: oklch(0.68 0.02 260);
+  --accent: oklch(0.72 0.18 300);
+  --accent-foreground: oklch(0.15 0.02 265);
+  --destructive: oklch(0.68 0.2 25);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.82 0.14 200 / 50%);
+
+  --brand-from: oklch(0.86 0.15 195);
+  --brand-via: oklch(0.72 0.17 255);
+  --brand-to: oklch(0.72 0.2 310);
+}
+
+/* ==================================================================
+ * 主题映射：把令牌暴露为 Tailwind 工具类 (bg-background / text-primary ...)
+ * ================================================================== */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand-from: var(--brand-from);
+  --color-brand-via: var(--brand-via);
+  --color-brand-to: var(--brand-to);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
+
+  /* 中西文混排字体栈：不依赖构建期网络下载，Cloudflare Pages 构建与国内网络均可用 */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Cascadia Code',
+    'Consolas', 'Liberation Mono', monospace;
+
+  /* 动画 -->
+     Tailwind 会据此生成 animate-* 工具类 */
+  --animate-meteor: meteor 5s linear infinite;
+  --animate-retro-grid: retro-grid 24s linear infinite;
+  --animate-shimmer: shimmer 4s linear infinite;
+  --animate-aurora: aurora 24s linear infinite alternate;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-shine: shine 6s linear infinite;
+  --animate-glow: glow 4s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-spotlight: spotlight 2s ease 0.4s 1 forwards;
+  --animate-orbit: orbit 8s linear infinite;
+}
+
+/* ==================================================================
+ * 关键帧
+ * ================================================================== */
+
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-520px);
+    opacity: 0;
+  }
+}
+
+@keyframes retro-grid {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes aurora {
+  0% {
+    background-position:
+      50% 50%,
+      50% 50%;
+  }
+  100% {
+    background-position:
+      350% 50%,
+      350% 50%;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--marquee-gap, 2rem)));
+  }
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* 聚光灯从左上角拉开 */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+/* 用于描边高光的环绕旋转 */
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================================================================
+ * 基础层
+ * ================================================================== */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply scroll-smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  ::selection {
+    background-color: var(--brand-via);
+    color: oklch(0.99 0 0);
+  }
+
+  /* 尊重系统「减少动效」偏好：统一降级所有无限动画 */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ==================================================================
+ * 自定义工具类
+ * ================================================================== */
+
+/** 品牌渐变文字，配合 animate-shimmer 使用可产生流光效果 */
+@utility text-brand-gradient {
+  background-image: linear-gradient(
+    110deg,
+    var(--brand-from) 0%,
+    var(--brand-via) 35%,
+    var(--brand-to) 60%,
+    var(--brand-from) 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/** 元素外发光 */
+@utility glow-primary {
+  box-shadow:
+    0 0 0 1px oklch(0.82 0.14 200 / 0.25),
+    0 0 28px -6px oklch(0.82 0.14 200 / 0.55);
+}
+
+/** 玻璃拟态面板 */
+@utility glass-panel {
+  background-color: oklch(1 0 0 / 4%);
+  border: 1px solid oklch(1 0 0 / 10%);
+  backdrop-filter: blur(12px) saturate(140%);
+}
+
+/** 顶部/底部渐隐遮罩，用于让特效层自然融入背景 */
+@utility mask-fade-y {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 18%,
+    black 82%,
+    transparent
+  );
+}
+
+/** 径向渐隐遮罩 */
+@utility mask-fade-radial {
+  mask-image: radial-gradient(
+    ellipse 70% 60% at 50% 40%,
+    black 30%,
+    transparent 100%
+  );
+}
+
+/**
+ * 网格线遮罩：只保留 1px 的横竖网格线，其余透明。
+ * 配合鼠标跟随的径向光晕使用，可让光晕只在网格线上显形。
+ * 需与 bg-[size:...] 保持同一尺寸。
+ */
+@utility grid-line-mask {
+  mask-image:
+    linear-gradient(to right, black 1px, transparent 0),
+    linear-gradient(to bottom, black 1px, transparent 0);
+  mask-size: 44px 44px;
+  mask-repeat: repeat;
+}
