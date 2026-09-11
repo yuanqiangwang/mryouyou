@@ -1,4 +1,4 @@
-# Mryouyou
+# MrYou<sup>2</sup>
 
 个人 Vibe Coding 工具与产品展示站。Next.js App Router 全静态导出，部署于 Cloudflare Pages。
 
