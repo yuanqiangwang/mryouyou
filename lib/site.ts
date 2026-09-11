@@ -20,12 +20,26 @@ export const navItems = [
   { label: '关于', href: '#about' },
 ] as const;
 
-/** Hero 数据指标 */
-export const heroStats = [
-  { label: '已发布产品', value: 12, suffix: '+' },
-  { label: '开源仓库', value: 28, suffix: '' },
-  { label: '累计 Star', value: 1400, suffix: '+' },
-] as const;
+/**
+ * Hero 数据指标。
+ *
+ * 只填能核对到出处的数字 —— 这三项分别对应：开源项目数量、
+ * x-on 的安装包体积与热键唤出延迟（后者见 lib/products.tsx 的注释）。
+ * 新增产品后请同步更新，不要回填估算值。
+ */
+export type HeroStat = {
+  label: string;
+  value: number;
+  suffix: string;
+  /** 小数位，需与 CountUp 的入参一致；整数指标可省略 */
+  decimals?: number;
+};
+
+export const heroStats: readonly HeroStat[] = [
+  { label: '开源项目', value: 1, suffix: ' 个' },
+  { label: 'xon 安装包', value: 1.58, decimals: 2, suffix: ' MB' },
+  { label: 'xon 热键唤出', value: 8.9, decimals: 1, suffix: ' ms' },
+];
 
 /** 技术栈标签（Hero 下方滚动跑马灯） */
 export const stackTags = [
@@ -34,11 +48,11 @@ export const stackTags = [
   'TypeScript',
   'Tailwind CSS',
   'shadcn/ui',
-  'Framer Motion',
+  'Motion',
   'Anime.js',
+  'Tauri v2',
+  'Rust',
   'Cloudflare Pages',
   'Claude Code',
-  'Cursor',
   'MCP',
-  'Vercel AI SDK',
 ] as const;

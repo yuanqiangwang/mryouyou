@@ -125,7 +125,11 @@ export function Hero() {
                 {stat.label}
               </dt>
               <dd className="mt-1.5 text-2xl font-semibold tracking-tight">
-                <CountUp to={stat.value} suffix={stat.suffix} />
+                <CountUp
+                  to={stat.value}
+                  decimals={stat.decimals}
+                  suffix={stat.suffix}
+                />
               </dd>
             </div>
           ))}
